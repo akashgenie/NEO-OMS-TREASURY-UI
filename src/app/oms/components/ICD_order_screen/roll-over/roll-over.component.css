@@ -321,3 +321,8 @@ footer {
   font-size: 11px;
   margin-top: 5px;
 }
+
+.newRollOverDetails {
+  border-top: 1px solid #ededed;
+  padding-top: 15px;
+}

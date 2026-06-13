@@ -34,15 +34,15 @@ const routes: Routes = [
   { path: 'edit_brocker_details', component: EditBrockerDetailsComponent },
 
   // icd
-    { path: 'icd_buy', component: IcdBuyComponent },
-     { path: 'icd_redemption', component: IcdRedemtpionComponent },
+  { path: 'icd_buy', component: IcdBuyComponent },
+  { path: 'icd_redemption', component: IcdRedemtpionComponent },
 
-     { path: 'partly_redemption', component: PartlyRedemptionComponent },
-     { path: 'roll_over', component: RollOverComponent },
+  { path: 'partly_redemption', component: PartlyRedemptionComponent },
+  { path: 'roll_over', component: RollOverComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OmsRoutingModule {}
+export class OmsRoutingModule { }

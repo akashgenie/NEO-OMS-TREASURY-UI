@@ -37,7 +37,7 @@ ngOnInit() {
 
   }
      onRedemtionTypeRadioChange(): void {
-    if (this.selectedRedemtionRadioButton === 'Full redemption') {
+    if (this.selectedRedemtionRadioButton === 'Full Redemption') {
       this.router.navigate(['/oms/icd_redemption']);
     } else if (this.selectedRedemtionRadioButton === 'Partly Redemption') {
       this.router.navigate(['/oms/partly_redemption']);
