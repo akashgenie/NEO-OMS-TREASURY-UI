@@ -10,31 +10,31 @@ import { SearchClientComponent } from './oms/search_client/search-client/search-
 import { LandingGuard } from './auth/guards/landing.guard';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./components/login/login.module').then((m) => m.LoginModule),
-  // },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./components/login/login.module').then((m) => m.LoginModule),
+  },
 
   {
     path: 'oms',
     loadChildren: () => import('./oms/oms.module').then((m) => m.OmsModule),
     data: { preload: true },
   },
- {
+//  {
 
-    path: '',
+//     path: '',
 
 
 
-    component: LandingComponentComponent
+//     component: LandingComponentComponent
 
+//   },
+  {
+    path: 'landing-page',
+    canActivate: [LandingGuard],
+    component: LandingComponentComponent,
   },
-  // {
-  //   path: 'landing-page',
-  //   canActivate: [LandingGuard],
-  //   component: LandingComponentComponent,
-  // },
 
   { path: 'search_client', component: SearchClientComponent },
 ];

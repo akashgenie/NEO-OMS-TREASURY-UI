@@ -49,6 +49,12 @@ import { BankerDashboardSearchPipe } from './dashboard-search-filter/banker-dash
 import { MonthYeaFormatPipe } from './dashboard-search-filter/month_year/month-yea-format.pipe';
 
 import { CommonFooterComponent } from './components/common_footer/common-footer/common-footer.component';
+import { IcdBuyComponent } from './components/ICD_order_screen/icd-buy/icd-buy.component';
+import { IcdRedemtpionComponent } from './components/ICD_order_screen/icd-redemtpion/icd-redemtpion.component';
+import { SidePanelCommonComponent } from './components/side_panel_common/side-panel-common/side-panel-common.component';
+
+import { PartlyRedemptionComponent } from './components/ICD_order_screen/partly-redemption/partly-redemption.component';
+import { RollOverComponent } from './components/ICD_order_screen/roll-over/roll-over.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -100,6 +106,12 @@ export const MY_FORMATS = {
     MonthYeaFormatPipe,
 
     CommonFooterComponent,
+     IcdBuyComponent,
+     IcdRedemtpionComponent,
+     SidePanelCommonComponent,
+
+     PartlyRedemptionComponent,
+     RollOverComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,457 @@
+<div class="col-lg-4">
+      <div class="row">
+        <div class="col">
+          <div class="placeOrderRaw">
+            <div class="placeOrderBox1">
+              <h6 class="d-flex align-items-center justify-content-between">
+                ACCOUNT DETAILS
+                <span class="showpointer" (click)="enableDisableHideClientDetails('open')"><img
+                    src="../../../assets/images/ic_eye2.svg" width="20" /></span>
+              </h6>
+              <ul>
+                <li class="po-box text-left">
+                  <span><strong>CLIENT NAME :</strong>
+                    <span class="ms-1">{{
+                      placeOrderData?.fullname | uppercase
+                      }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>PAN :</strong>
+                    <span class="ms-1">{{ placeOrderData?.pan }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>CLIENT ID :</strong>
+                    <span class="ms-1">{{ placeOrderData?.clientId }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>A/C TYPE :</strong>
+                    <span class="ms-1">{{ placeOrderData?.accountType }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>A/C STATUS :</strong>
+                    <span class="ms-1">{{
+                      placeOrderData?.accountStatus | uppercase
+                      }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>MOBILE :</strong>
+                    <span class="ms-1">{{ placeOrderData?.mobile }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>EMAIL :</strong>
+                    <span class="ms-1"> {{ placeOrderData?.email }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>DOB :</strong>
+                    <span>
+                      {{
+                      placeOrderData?.dob | date: "dd-MMM-yyyy" | uppercase
+                      }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>LOB :</strong>
+                    <span> {{ placeOrderData?.lob | uppercase }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>SUB LOB :</strong>
+                    <span> {{ placeOrderData?.subLob | uppercase }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>CXO NAME :</strong>
+                    <span class="ms-1">
+                      {{ placeOrderData?.csoName | uppercase }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>BANKER NAME :</strong>
+                    <span class="ms-1">
+                      {{ placeOrderData?.bankername | uppercase }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>L4 :</strong>
+                    <span class="ms-1">
+                      {{ placeOrderData?.clientL4 | uppercase }}</span>
+                  </span>
+                </li>
+              </ul>
+              <h6 class="mt-1 d-flex align-items-center justify-content-between">
+                BANK DETAILS
+                <span class="showpointer" (click)="enableDisableBankDet('openBank')"><img
+                    src="../../../assets/images/ic_eye2.svg" width="22" /></span>
+              </h6>
+              <ul>
+                <li class="po-box text-left">
+                  <span><strong>BANK A/C NO :</strong>
+                    <span class="ms-1">{{ bankDetails?.acNo }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>IFSC CODE :</strong>
+                    <span class="ms-1">{{ bankDetails?.ifscCode }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>PRIMARY :</strong>
+                    <span class="ms-1" [textContent]="bankDetails?.isBankPrimary ? 'YES' : 'NO'"></span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>POA :</strong>
+                    <span class="ms-1" [textContent]="bankDetails?.bankPOA ? 'YES' : 'NO'"></span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>VERSION:</strong>
+                    <span class="ms-1">{{
+                      placeOrderData?.bankVersion | monthYeaFormat
+                      }}</span>
+                  </span>
+                </li>
+              </ul>
+              <h6 class="mt-1 d-flex align-items-center justify-content-between">
+                DEMAT DETAILS
+                <span class="showpointer" (click)="enableDisableDp('openDp')"><img
+                    src="../../../assets/images/ic_eye2.svg" width="22" /></span>
+              </h6>
+              <ul class="pb-2">
+                <li class="po-box text-left">
+                  <span><strong>DP ID :</strong>
+                    <span class="ms-1">{{ dematDetails?.dpId }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong> DP CLIENT ID :</strong>
+                    <span class="ms-1">{{ dematDetails?.dpClientid }}</span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>DEMAT STATUS :</strong>
+                    <span class="ms-1">ACTIVE </span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>PRIMARY :</strong>
+                    <span class="ms-1" [textContent]="dematDetails?.isDPPriamry ? 'YES' : 'NO'"></span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>POA :</strong>
+                    <span class="ms-1" [textContent]="dematDetails?.dppoa ? 'YES' : 'NO'"></span>
+                  </span>
+                </li>
+                <li class="po-box text-left">
+                  <span><strong>VERSION:</strong>
+                    <span class="ms-1">{{
+                      placeOrderData?.dpVersion | monthYeaFormat
+                      }}</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pupFooter pupFooterFilter pupFooterFilterShow" *ngIf="showHideClientDetails">
+  <a class="closeBtn" (click)="enableDisableHideClientDetails('close')"><img
+      src="../../../assets/images/ic_close.svg" /></a>
+  <div class="container">
+    <div class="pupFooterIner kraDetailspup">
+      <h2>
+        <img src="../../../assets/images/ic_filter2.svg" />
+        <span>
+          {{ viewData[0]?.firstName | uppercase }}
+          {{ viewData[0]?.middleName | uppercase }}
+          {{ viewData[0]?.lastName | uppercase }}
+        </span>
+      </h2>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">CLIENT NAME</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.firstName | uppercase }}
+                {{ viewData[0]?.middleName | uppercase }}
+                {{ viewData[0]?.lastName | uppercase }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">CLIENT ID</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.clientId | uppercase }} </span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">ACCOUNT TYPE</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.accountType | uppercase }} </span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">CXO NAME</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.csoName | uppercase }} </span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">BANKER NAME</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.bankerName | uppercase }} </span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">MOBILE NO</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.mobile }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">PAN</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.pan }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">DATE OF BIRTH</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{
+                viewData[0].dob | date: "dd-MMM-yyyy" | uppercase
+                }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">EMAIL</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0]?.email | uppercase }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">LOB</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0].lob | uppercase }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">GENDER</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ viewData[0].gender | uppercase }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-warning mt-3" role="alert">
+          <span class="colGry">ADDRESS</span><br />
+          <span>{{ viewData[0]?.add1 }} - {{ viewData[0]?.pin }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pupFooter pupFooterFilter pupFooterFilterShow" *ngIf="showHideBank">
+  <a class="closeBtn" (click)="enableDisableBankDet('closeBank')">
+    <img src="../../../assets/images/ic_close.svg" />
+  </a>
+  <div class="container">
+    <div class="pupFooterIner editBank">
+      <div class="d-flex justify-content-between">
+        <h2>
+          <img src="../../../assets/images/ic_filter2.svg" />
+          Change Bank
+        </h2>
+        <div>
+          <div class="mb-2 text-end font-size-12">
+            To change default bank, please contact WealthOps
+
+
+
+          </div>
+          <!-- <a class="cursor-pointer addBankLink">Add Bank</a> -->
+        </div>
+      </div>
+      <div class="row mb-2" *ngFor="let bank of bankData; let i = index">
+        <div class="col-1 d-flex align-items-center">
+          <div class="form-check me-1">
+            <!-- <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="bankRadio{{ i }}"
+              [value]="bank"
+              (change)="selectBank(bank)"
+              [checked]="isSelected(bank)"
+            /> -->
+          </div>
+        </div>
+        <div class="col-11 placeOrderContainer">
+          <ul class="editBankRaw">
+            <li class="po-box text-left">
+              <div class="po-block clientDetails">
+                <span class="badge">BANK {{ i + 1 }}</span>
+                <div>
+                  <span>{{ bank?.bankName | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">ACCOUNT TYPE</span>
+                <div>
+                  <span>{{ bank?.bankAccountType | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">ACCOUNT NUMBER</span>
+                <div>
+                  <span>{{ bank?.bankAccountNumber }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">IFSC CODE </span>
+                <div>
+                  <span>{{ bank?.bankIfsc | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">PRIMARY</span>
+                <div>
+                  <span [textContent]="bank.isPrimary ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">POA</span>
+                <div>
+                  <span [textContent]="bank.isPoa ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="commonBtn text-center d-block mt-5">
+        <button class="btnSubmit" id="filterSubmit" (click)="enableDisableBankDet('closeBank')">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pupFooter pupFooterFilter pupFooterFilterShow" *ngIf="showHideDp">
+  <a class="closeBtn" (click)="enableDisableDp('closeDp')">
+    <img src="../../../assets/images/ic_close.svg" />
+  </a>
+  <div class="container">
+    <div class="pupFooterIner editBank">
+      <h2>
+        <img src="../../../assets/images/ic_filter2.svg" />
+        Change DP
+      </h2>
+      <div class="mb-2 text-end font-size-12">
+        To add a new demat account, please write to
+        <a href="mailto:wealthops@neo-group.in" class="showpointer emailHover">
+          wealthops@neo-group.in</a>
+        with CML copy. <br />Once the demat is added and confirmed, it will be
+        available here in 2 hours
+      </div>
+      <div class="row mb-2" *ngFor="let dp of dpData; let i = index">
+        <div class="col-1 d-flex align-items-center">
+          <div class="form-check me-1">
+            <!-- <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="dpRadio{{ i }}"
+              [value]="dp"
+              (change)="selectDp(dp)"
+              [checked]="isDpSelected(dp)"
+            /> -->
+          </div>
+        </div>
+        <div class="col placeOrderContainer">
+          <ul class="editBankRaw">
+            <li class="po-box text-left">
+              <div class="po-block clientDetails">
+                <span class="badge">DP {{ i + 1 }}</span>
+                <div>
+                  <span>{{ dp.dpId }}{{ dp.dpClientId }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">DEPOSITORY</span>
+                <div>
+                  <span>{{ dp.tradingDpType }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">PRIMARY</span>
+                <div>
+                  <span [textContent]="dp.isPrimary ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">POA</span>
+                <div>
+                  <span [textContent]="dp.isPoa ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="commonBtn text-center d-block mt-5">
+        <button class="btnSubmit" id="filterSubmit" (click)="enableDisableDp('closeDp')">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

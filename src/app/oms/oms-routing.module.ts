@@ -11,6 +11,11 @@ import { BrockerOrderUnlistedComponent } from './components/brocker_order_unlist
 import { ViewCounterPartyComponent } from './components/view-counter-party/view-counter-party.component';
 
 import { EditBrockerDetailsComponent } from './components/brocker-details/edit_brocker_details/edit-brocker-details/edit-brocker-details.component';
+import { IcdBuyComponent } from './components/ICD_order_screen/icd-buy/icd-buy.component';
+import { IcdRedemtpionComponent } from './components/ICD_order_screen/icd-redemtpion/icd-redemtpion.component';
+
+import { PartlyRedemptionComponent } from './components/ICD_order_screen/partly-redemption/partly-redemption.component';
+import { RollOverComponent } from './components/ICD_order_screen/roll-over/roll-over.component';
 
 const routes: Routes = [
   {
@@ -27,6 +32,13 @@ const routes: Routes = [
 
   { path: 'view_counter_party', component: ViewCounterPartyComponent },
   { path: 'edit_brocker_details', component: EditBrockerDetailsComponent },
+
+  // icd
+    { path: 'icd_buy', component: IcdBuyComponent },
+     { path: 'icd_redemption', component: IcdRedemtpionComponent },
+
+     { path: 'partly_redemption', component: PartlyRedemptionComponent },
+     { path: 'roll_over', component: RollOverComponent },
 ];
 
 @NgModule({

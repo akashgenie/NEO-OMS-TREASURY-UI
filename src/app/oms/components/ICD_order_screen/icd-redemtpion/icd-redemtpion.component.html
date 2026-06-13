@@ -1,0 +1,111 @@
+<p>icd-buy works!</p>
+<app-side-panel-common></app-side-panel-common>
+<div class="sticky">
+  <app-common-header></app-common-header>
+  <div class="pageheader">
+    <div class="pageheaderDashHead">
+      <div class="container d-flex align-items-center justify-content-between">
+        <h1>Place Order</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<h2 class="mb-3 font-size-18">Order Type</h2>
+          <div>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation"  >
+                <button class="nav-link btn-sm  " id="pills-nse-tab" data-bs-toggle="pill" data-bs-target="#pills-nse"
+                  type="button" role="tab" aria-controls="pills-nse" aria-selected="true"  >
+                  ICD
+                </button>
+              </li>
+
+
+
+
+
+
+            </ul>
+          </div>
+
+           <!-- PMS radio button -->
+          <div class="mt-2">
+            <!-- Fixed Deposit -->
+            <div class="form-check ms-0">
+              <input type="radio" name="productTypeRadioButton" class="form-check-input buyBtn" id="flexRadioDefault54"
+                value="ICD taken" [(ngModel)]="selectedProductRadioButton" (change)="onProductTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault54">
+
+                ICD taken
+              </label>
+            </div>
+
+
+            <div class="form-check ms-0">
+              <input type="radio" name="productTypeRadioButton" class="form-check-input buyBtn" id="flexRadioDefault54"
+                value="ICD Given" [(ngModel)]="selectedProductRadioButton" (change)="onProductTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault54">
+
+                 ICD Given
+              </label>
+            </div>
+          </div>
+
+          <!-- Buy redemption -->
+             <div class="mt-2">
+
+            <div class="form-check ms-0">
+              <input type="radio" name="productTypeRadioButton1" class="form-check-input buyBtn" id="flexRadioDefault541"
+                value="BUY" [(ngModel)]="selectedICDRadioButton" (change)="onICDTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault541">
+                <img src="../../../assets/images/Buy.svg" alt="proImg" class="radio-img" />
+                BUY
+              </label>
+            </div>
+
+            <!-- ICD -->
+            <div class="form-check">
+              <input type="radio" name="productTypeRadioButton1" class="form-check-input sellBtn" id="flexRadioDefault551"
+                value="REDEMPTION" [(ngModel)]="selectedICDRadioButton" (change)="onICDTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault551">
+                <img src="../../../assets/images/pre-mature-withdrawal.png" alt="proImg" class="radio-img" />
+                REDEMPTION
+              </label>
+            </div>
+
+          </div>
+
+          <!-- redemption sub menu -->
+             <div class="mt-2">
+
+            <div class="form-check ms-0">
+              <input type="radio" name="productTypeRadioButton1" class="form-check-input buyBtn" id="flexRadioDefault54112"
+                value="Full redemption" [(ngModel)]="selectedRedemtionRadioButton" (change)="onRedemtionTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault54112">
+                 <img src="../../../assets/images/pre-mature-withdrawal.png" alt="proImg" class="radio-img" />
+                Full redemption
+              </label>
+            </div>
+
+
+            <div class="form-check">
+              <input type="radio" name="productTypeRadioButton1" class="form-check-input sellBtn" id="flexRadioDefault55121"
+                value="Partly Redemption" [(ngModel)]="selectedRedemtionRadioButton" (change)="onRedemtionTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault55112">
+                <img src="../../../assets/images/pre-mature-withdrawal.png" alt="proImg" class="radio-img" />
+                Partly Redemption
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="radio" name="productTypeRadioButton1" class="form-check-input sellBtn" id="flexRadioDefault55121"
+                value="Roll Over" [(ngModel)]="selectedRedemtionRadioButton" (change)="onRedemtionTypeRadioChange()" />
+              <label class="form-check-label" for="flexRadioDefault55112">
+                <img src="../../../assets/images/pre-mature-withdrawal.png" alt="proImg" class="radio-img" />
+                Roll Over
+              </label>
+            </div>
+
+          </div>
+ <form>
+            <h1>create Full Redemption  form HTML</h1>
+          </form>
