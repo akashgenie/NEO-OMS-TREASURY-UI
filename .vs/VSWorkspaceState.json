@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\model",
+    "\\src\\app\\service",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\components\\risk-profiling"
+  ],
+  "SelectedNode": "\\src\\app\\shared\\components\\personal-details",
+  "PreviewInSolutionExplorer": false
+}

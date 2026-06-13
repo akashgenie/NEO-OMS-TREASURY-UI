@@ -1,0 +1,864 @@
+<div class="sticky">
+  <app-common-header></app-common-header>
+  <div class="pageheader">
+    <div class="pageheaderDashHead">
+      <div class="container d-flex align-items-center justify-content-between">
+        <h1>Place Order</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="placeOrderModule mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 pt-4">
+        <div class="orderType">
+          <h2 class="mb-3 font-size-18">Order Type</h2>
+          <div>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link btn-sm active"
+                  id="pills-sp-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-nse"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-nse"
+                  aria-selected="false"
+                >
+                  Unlisted EQ
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <form [formGroup]="orderEntryForm">
+              <div class="commonBtn mb-2">
+                <div class="form-check ms-0">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="transactionType"
+                    value="BLOCK"
+                  />
+                  <label class="form-check-label"> Block </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-11 mb-3">
+                  <mat-form-field
+                    class="form-control form-select"
+                    appearance="fill"
+                  >
+                    <mat-label>Security Name</mat-label>
+                    <input
+                      type="text"
+                      aria-label="Number"
+                      matInput
+                      formControlName="scripName"
+                      [matAutocomplete]="security"
+                      (keydown.space)="$event.preventDefault()"
+                    />
+                    <mat-autocomplete
+                      #security="matAutocomplete"
+                      (optionSelected)="checkUnlistedIsinCode($event)"
+                    >
+                      <mat-option
+                        *ngFor="let option of securityOptions | async"
+                        [value]="option.companyName"
+                      >
+                        {{ option.companyName.toString().toUpperCase() }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('scripName')?.hasError('required') &&
+                      (orderEntryForm.get('scripName')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please select security name
+                  </span>
+                </div>
+                <div class="col-lg-1 text-start mt-4">
+                  <a role="button">
+                    <img
+                      src="../../../assets/images/ic_close2.svg"
+                      class=""
+                      width="25"
+                      (click)="resetUnlistedIsinSecurity()"
+                    />
+                  </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field
+                    class="form-control form-select"
+                    appearance="fill"
+                  >
+                    <mat-label>ISIN Code</mat-label>
+                    <input
+                      type="text"
+                      aria-label="Number"
+                      matInput
+                      formControlName="isinCode"
+                      [matAutocomplete]="isin"
+                      (keydown.space)="$event.preventDefault()"
+                    />
+                    <mat-autocomplete
+                      #isin="matAutocomplete"
+                      (optionSelected)="checkUnlistedSecurityName($event)"
+                    >
+                      <mat-option
+                        *ngFor="let option of isinOptionss | async"
+                        [value]="option.isin"
+                      >
+                        {{ option.isin.toString().toUpperCase() }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('isinCode')?.hasError('required') &&
+                      (orderEntryForm.get('isinCode')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please select ISIN code
+                  </span>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field class="form-control" appearance="fill">
+                    <mat-label>Entity</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      formControlName="buyingEntity"
+                      [matAutocomplete]="autoEntity"
+                    />
+                    <mat-autocomplete
+                      #autoEntity="matAutocomplete"
+                      (optionSelected)="onEntitySelected($event.option.value)"
+                    >
+                      <mat-option
+                        *ngFor="let entity of filteredEntities | async"
+                        [value]="entity.entityName"
+                      >
+                        {{ entity.entityName | uppercase }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm
+                        .get('buyingEntity')
+                        ?.hasError('required') &&
+                      (orderEntryForm.get('buyingEntity')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please select Entity
+                  </span>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field
+                    class="form-control form-select w-100"
+                    appearance="fill"
+                  >
+                    <mat-label>LOB </mat-label>
+                    <mat-select
+                      formControlName="lob"
+                      (selectionChange)="clickLob($event)"
+                    >
+                      <mat-option
+                        *ngFor="let lob of lobData"
+                        [value]="lob.name"
+                      >
+                        {{ lob.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('lob')?.hasError('required') &&
+                      (orderEntryForm.get('lob')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please select LOB
+                  </span>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field class="form-control" appearance="fill">
+                    <mat-label>Tranche Name </mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      formControlName="trancheName"
+                      [matAutocomplete]="autoTranche"
+                    />
+                    <mat-autocomplete
+                      #autoTranche="matAutocomplete"
+                      (optionSelected)="onTrancheSelected($event.option.value)"
+                    >
+                      <mat-option
+                        *ngFor="let tranche of filteredTranche | async"
+                        [value]="tranche.trancheName"
+                      >
+                        {{ tranche.trancheName | uppercase }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('trancheName')?.hasError('required') &&
+                      (orderEntryForm.get('trancheName')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please select Entity
+                  </span>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-controlMain">
+                    <span>Available Qty:</span>
+                    <input
+                      type="text"
+                      class="form-control disabled"
+                      formControlName="availableQty"
+                      readonly
+                      appCommaSeparated
+                    />
+                  </label>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-controlMain">
+                    <span>Block Qty<span class="mandatory1">*</span></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="blockQty"
+                      [(ngModel)]="unlistedQuantityValue"
+                      (input)="unlistedQtyformatInput()"
+                      (keypress)="onKeyPress($event)"
+                      appCommaSeparated
+                    />
+                  </label>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('blockQty')?.hasError('required') &&
+                      (orderEntryForm.get('blockQty')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please enter block qty
+                  </span>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('blockQty')?.hasError('notMultiple') &&
+                      (orderEntryForm.get('blockQty')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Block qty must be a multiple of
+                    {{ floorPriceData?.multipuleOff }}
+                  </span>
+                  <div
+                    class="mt-2 font-size-12 fw-500"
+                    *ngIf="unlistedQuantityValue"
+                  >
+                    Block quantity in words:
+                    {{ unlistedQuantityValue | numberToWords }} only
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-controlMain">
+                    <span>Floor Price</span>
+                    <input
+                      type="text"
+                      class="form-control disabled"
+                      formControlName="floorPrice"
+                      readonly
+                      appCommaSeparated
+                    />
+                  </label>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-controlMain">
+                    <span>Block Price<span class="mandatory1">*</span></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="blockPrice"
+                      [(ngModel)]="unlistedPrice"
+                      (input)="unlistedPriceformatInput()"
+                      (keypress)="onKeyPressComma($event)"
+                      appCommaSeparated
+                    />
+                  </label>
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm.get('blockPrice')?.hasError('required') &&
+                      (orderEntryForm.get('blockPrice')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please enter block price
+                  </span>
+                  <br />
+                  <span
+                    class="errorTxt"
+                    *ngIf="
+                      orderEntryForm
+                        .get('blockPrice')
+                        ?.hasError('belowFloorPrice') &&
+                      (orderEntryForm.get('blockPrice')?.touched ||
+                        orderDetailsSubmitted ||
+                        unlistedTradeTypeSubmitted)
+                    "
+                  >
+                    Please enter block price above floor price
+                  </span>
+                  <div class="mt-2 font-size-12 fw-500" *ngIf="unlistedPrice">
+                    Block price in words:
+                    {{ unlistedPrice | numberToWords }} only
+                  </div>
+                </div>
+              </div>
+              <div class="commonBtn mt-4">
+                <button
+                  class="btnSubmit"
+                  id="filterSubmit"
+                  (click)="onAddToCart()"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  class="btnSubmit"
+                  *ngIf="cartData?.$values?.length > 0"
+                  (click)="enableDisableViewCart('openViewCart')"
+                >
+                  View Cart
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="confirmation-dialog" *ngIf="showConfirmDialogOrder">
+        <div class="confirmation-dialog-content">
+          <div>
+            <h4>Order added to cart</h4>
+            <br />
+            <br />
+          </div>
+          <button class="btn btnOutline w-auto me-3" (click)="SubmitConfirm()">
+            Ok
+          </button>
+        </div>
+      </div>
+      <div
+        class="pupFooter pupFooterFilter pupFooterFilterShow pupFooterViewCart"
+        *ngIf="showHideViewCart"
+      >
+        <a class="closeBtn" (click)="enableDisableViewCart('CloseViewCart')">
+          <img src="../../../assets/images/ic_close.svg" />
+        </a>
+        <div class="container">
+          <div class="pupFooterIner max-width-none">
+            <h2>
+              <img src="../../../assets/images/ic_filter2.svg" />
+              View Cart
+            </h2>
+            <span class="font-size-12"
+              >BROKER NAME :
+              <span class="ms-1">{{
+                placeOrderData?.brokerName | uppercase
+              }}</span>
+            </span>
+            &nbsp; | &nbsp;
+            <span class="font-size-12"
+              >BROKER ID :
+              <span class="ms-1">{{
+                placeOrderData?.brokerCode | uppercase
+              }}</span>
+            </span>
+            &nbsp; | &nbsp;
+            <span class="font-size-12"
+              >BROKER A/C TYPE :
+              <span class="ms-1">{{
+                placeOrderData?.accountType | uppercase
+              }}</span>
+            </span>
+            <div class="viewCartModule mt-4 mb-5">
+              <div class="">
+                <table class="table table-bordered text-center">
+                  <thead>
+                    <th style="padding: 10px">TRADE DATE/ XSIP START DATE</th>
+                    <th style="padding: 10px">UCC CODE</th>
+                    <th style="padding: 10px">ISIN</th>
+                    <th style="padding: 10px">SECURITY</th>
+                    <th style="padding: 10px">SCHEME CODE/ FREQUENCY</th>
+                    <th style="padding: 10px">FIRST ORDER TODAY</th>
+                    <th style="padding: 10px">MANDATE ID</th>
+                    <th style="padding: 10px">FOLIO NO</th>
+                    <th style="padding: 10px">MODE</th>
+                    <th style="padding: 10px">ALL REDEEM</th>
+                    <th style="padding: 10px">ORDER TYPE</th>
+                    <th style="padding: 10px">TRADE TYPE</th>
+                    <th style="padding: 10px">QTY</th>
+                    <th style="padding: 10px">PRICE</th>
+                    <th style="padding: 10px">TOTAL CONSIDERATION</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of cartData?.$values">
+                      <td>-</td>
+                      <td>-</td>
+                      <td>{{ data?.isincode }}</td>
+                      <td>{{ data?.schemeName | uppercase }}</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>UNLISTED EQ</td>
+                      <td>{{ data?.ordertype | uppercase }}</td>
+                      <td>
+                        {{
+                          formatToIndianNumberingDecimalNotShow(data?.blockQty)
+                        }}
+                      </td>
+                      <td>{{ formatToIndianNumbering(data?.blockPrice) }}</td>
+                      <td>-</td>
+                      <td>
+                        <img
+                          src="../../../assets/images/ic_delete.svg"
+                          width="24"
+                          (click)="confirmDelete(data.id, data.ordertype)"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div
+                  class="commonBtn mt-5 text-center d-block"
+                  *ngIf="cartData?.$values?.length > 0"
+                >
+                  <button
+                    class="btnSubmit"
+                    id="filterSubmit"
+                    (click)="submitViewCartOrder()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="confirmation-dialog"
+              *ngIf="showConfirmDialogOrderPopUp"
+            >
+              <div class="confirmation-dialog-content">
+                <div>
+                  <span
+                    >Your order will be confirmed. Do you want to proceed?</span
+                  >
+                  <br />
+                  <br />
+                </div>
+                <button
+                  class="btn btnOutline w-auto me-3"
+                  (click)="SubmitConfirmOrder()"
+                >
+                  Yes
+                </button>
+                <button
+                  class="btn btnOutline w-auto"
+                  (click)="submitCancelOrder()"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+            <div class="confirmation-dialog" *ngIf="showConfirmDialog">
+              <div class="confirmation-dialog-content">
+                <h4 class="mb-3">
+                  Are you sure you want to delete this order?
+                </h4>
+                <button
+                  class="btn btnOutline w-auto me-3"
+                  (click)="onConfirm()"
+                >
+                  Yes
+                </button>
+                <button class="btn btnOutline w-auto" (click)="onCancel()">
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row">
+          <div class="col">
+            <div class="placeOrderRaw">
+              <div class="placeOrderBox1">
+                <h6 class="d-flex align-items-center justify-content-between">
+                  ACCOUNT DETAILS
+                  <span
+                    class="showpointer"
+                    (click)="enableDisableHideClientDetails('open')"
+                    ><img src="../../../assets/images/ic_eye2.svg" width="20"
+                  /></span>
+                </h6>
+                <ul>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>BROKER NAME :</strong>
+                      <span class="ms-1">{{
+                        placeOrderData?.brokerName | uppercase
+                      }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>PAN :</strong>
+                      <span class="ms-1">{{ placeOrderData?.brokerPan }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>DOB :</strong>
+                      <span>
+                        {{
+                          placeOrderData?.dob | date: "dd-MMM-yyyy" | uppercase
+                        }}</span
+                      >
+                    </span>
+                  </li>
+                </ul>
+                <h6
+                  class="mt-1 d-flex align-items-center justify-content-between"
+                >
+                  BANK DETAILS
+                  <span
+                    class="showpointer"
+                    (click)="enableDisableBankDet('openBank')"
+                    ><img src="../../../assets/images/ic_edit.svg" width="22"
+                  /></span>
+                </h6>
+                <ul>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>BANK A/C NO :</strong>
+                      <span class="ms-1">{{ bankDetails?.bankAccountNo }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>IFSC CODE :</strong>
+                      <span class="ms-1">{{ bankDetails?.ifscCode }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>PRIMARY :</strong>
+                      <span
+                        class="ms-1"
+                        [textContent]="
+                          bankDetails?.isPrimaryOfBankAccount ? 'YES' : 'NO'
+                        "
+                      ></span>
+                    </span>
+                  </li>
+                </ul>
+                <h6
+                  class="mt-1 d-flex align-items-center justify-content-between"
+                >
+                  DEMAT DETAILS
+                  <span class="showpointer" (click)="enableDisableDp('openDp')"
+                    ><img src="../../../assets/images/ic_edit.svg" width="22"
+                  /></span>
+                </h6>
+                <ul class="pb-2">
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>DP ID :</strong>
+                      <span class="ms-1">{{
+                        dematDetails?.dematAccountNo
+                      }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong> DP CLIENT ID :</strong>
+                      <span class="ms-1">{{ dematDetails?.dpClientid }}</span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>DEMAT STATUS :</strong>
+                      <span class="ms-1">ACTIVE </span>
+                    </span>
+                  </li>
+                  <li class="po-box text-left">
+                    <span
+                      ><strong>PRIMARY :</strong>
+                      <span
+                        class="ms-1"
+                        [textContent]="
+                          dematDetails?.isPrimaryOfDematAccount ? 'YES' : 'NO'
+                        "
+                      ></span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pupFooter pupFooterFilter pupFooterFilterShow" *ngIf="showHideBank">
+  <a class="closeBtn" (click)="enableDisableBankDet('closeBank')">
+    <img src="../../../assets/images/ic_close.svg" />
+  </a>
+  <div class="container">
+    <div class="pupFooterIner editBank">
+      <div class="d-flex justify-content-between">
+        <h2>
+          <img src="../../../assets/images/ic_filter2.svg" />
+          Change Bank
+        </h2>
+        <div></div>
+      </div>
+      <div class="row mb-2" *ngFor="let bank of bankData; let i = index">
+        <div class="col-1 d-flex align-items-center">
+          <div class="form-check me-1">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              [value]="bank.bankAccountNo"
+              (change)="selectBank(bank.bankAccountNo)"
+              [checked]="i === 0"
+            />
+          </div>
+        </div>
+        <div class="col-11 placeOrderContainer">
+          <ul class="editBankRaw">
+            <li class="po-box text-left">
+              <div class="po-block clientDetails">
+                <span class="badge">BANK {{ i + 1 }}</span>
+                <div>
+                  <span>{{ bank?.bankName | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">ACCOUNT TYPE</span>
+                <div>
+                  <span>{{ bank?.accountType | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">ACCOUNT NUMBER</span>
+                <div>
+                  <span>{{ bank?.bankAccountNo }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">IFSC CODE </span>
+                <div>
+                  <span>{{ bank?.ifscCode | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">PRIMARY</span>
+                <div>
+                  <span [textContent]="bank.isPrimary ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="commonBtn text-center d-block mt-5">
+        <button
+          class="btnSubmit"
+          id="filterSubmit"
+          (click)="enableDisableBankDet('closeBank')"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pupFooter pupFooterFilter pupFooterFilterShow" *ngIf="showHideDp">
+  <a class="closeBtn" (click)="enableDisableDp('closeDp')">
+    <img src="../../../assets/images/ic_close.svg" />
+  </a>
+  <div class="container">
+    <div class="pupFooterIner editBank">
+      <h2>
+        <img src="../../../assets/images/ic_filter2.svg" />
+        Change DP
+      </h2>
+      <div class="mb-2 text-end font-size-12">
+        To add a new demat account, please write to
+        <a href="mailto:wealthops@neo-group.in" class="showpointer emailHover">
+          wealthops@neo-group.in</a
+        >
+        with CML copy. <br />Once the demat is added and confirmed, it will be
+        available here in 2 hours
+      </div>
+      <div class="row mb-2" *ngFor="let dp of dpData; let i = index">
+        <div class="col-1 d-flex align-items-center">
+          <div class="form-check me-1">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              [value]="dp.dematAccountNo"
+              (change)="selectDp(dp.dematAccountNo)"
+              [checked]="i === 0"
+            />
+          </div>
+        </div>
+        <div class="col placeOrderContainer">
+          <ul class="editBankRaw">
+            <li class="po-box text-left">
+              <div class="po-block clientDetails">
+                <span class="badge">DP {{ i + 1 }}</span>
+                <div>
+                  <span>{{ dp.dematAccountNo }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">DEPOSITORY</span>
+                <div>
+                  <span>{{ dp.depository | uppercase }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="po-box text-left">
+              <div class="po-block">
+                <span class="colGry">PRIMARY</span>
+                <div>
+                  <span [textContent]="dp.isPrimary ? 'YES' : 'NO'"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="commonBtn text-center d-block mt-5">
+        <button
+          class="btnSubmit"
+          id="filterSubmit"
+          (click)="enableDisableDp('closeDp')"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="pupFooter pupFooterFilter pupFooterFilterShow"
+  *ngIf="showHideClientDetails"
+>
+  <a class="closeBtn" (click)="enableDisableHideClientDetails('close')"
+    ><img src="../../../assets/images/ic_close.svg"
+  /></a>
+  <div class="container">
+    <div class="pupFooterIner kraDetailspup">
+      <h2>
+        <img src="../../../assets/images/ic_filter2.svg" />
+        <span>
+          {{ placeOrderDataViewData.brokerName | uppercase }}
+        </span>
+      </h2>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">BROKER NAME </span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ placeOrderDataViewData.brokerName | uppercase }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">BROKER PAN</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ placeOrderDataViewData?.brokerPan }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">BROKER EMAIL</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ placeOrderDataViewData.brokerEmail | uppercase }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">ACCOUNT TYPE </span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ placeOrderDataViewData.accountType | uppercase }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-4 col-md-6">
+              <span class="colGry">BROKER MOBILE</span>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <span>{{ placeOrderDataViewData.brokerMobile }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-common-footer></app-common-footer>

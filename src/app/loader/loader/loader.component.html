@@ -1,0 +1,18 @@
+<!-- <div mat-dialog-content class="text-center loader-dialog">
+    
+    <img src="../../../assets/images/Loader.gif" alt="Loading animation">
+    Please wait! 
+     <mat-spinner [strokeWidth]="10" class="mx-auto"></mat-spinner>
+  </div> -->
+<div class="text-center loader-dialog" *ngIf="loader">
+  <!-- *ngIf="loader"oader" -->
+  <img
+    style="height: auto; max-width: 400px; width: 70%; overflow: hidden"
+    src="../../../assets/images/Loader.gif"
+    alt="Loading animation"
+  />
+  <p>Please wait while we fetch the details!</p>
+  <!-- <h1>Please wait while we fetch the details!</h1> -->
+  <!-- Please wait!  -->
+  <!-- <mat-spinner [strokeWidth]="10" class="mx-auto"></mat-spinner>  -->
+</div>

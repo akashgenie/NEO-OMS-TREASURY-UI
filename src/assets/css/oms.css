@@ -1,0 +1,335 @@
+.btnOutline {
+  background: transparent !important;
+  border: 1px solid #4b006d;
+  height: 36px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  width: 100%;
+  color: #4b006d;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.btnOutline:hover {
+  background: #4b006d !important;
+  color: #fff;
+}
+
+.btnConfirm {
+  background: #4b006d !important;
+  border: 1px solid #4b006d;
+  height: 36px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  width: 100%;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btnConfirm:hover {
+  color: #fff !important;
+}
+
+.exchangeNSETable .dashBoardTableHeader label {
+  display: block !important;
+}
+.exchangeNSETable .divTableBody label {
+  display: none;
+}
+
+/* .orderTypeInputModule .mat-mdc-form-field {
+  margin-top: 10px;
+} */
+
+.dashBoardNewTable .divTableCell {
+  vertical-align: top;
+}
+
+.mat-h6, .mat-typography .mat-h6, .mat-typography h6 {
+  font: 400 calc(14px * 0.67)/20px !important;
+}
+
+.kraDetailspup h4,
+.kraDetailspup .colGry {
+  font-size: 14px;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  background-color: #4b006d !important;
+  color: #fff !important;
+}
+
+ul.placeOrderRaw {
+  position: fixed;
+}
+
+
+
+/* Font size for all table */
+.dashBoardTransactionTable .divTableCell span,
+.dashBoardNDPSTable .divTableCell span,
+.dashBoardOperaTable .divTableCell span,
+.dashBoardBondTeamTable .divTableCell span,
+.dashBoardDealerTable .divTableCell span,
+.dashBoardMonitoringTable .divTableCell span,
+.dashBoardInventoryTable .divTableCell span,
+.dashBoardTable .divTableCell .colGry ,
+.dashBoardTable .divTableCell a{
+  font-size: 11px;
+}
+
+
+.dashBoardTable .divTableCell {
+  vertical-align: top;
+}
+
+/* Font Size */
+
+.font-size-10 {
+  font-size: 10px !important;
+}
+
+.font-size-11 {
+  font-size: 11px !important;
+}
+
+.font-size-12 {
+  font-size: 12px !important;
+}
+
+.font-size-13 {
+  font-size: 13px !important;
+}
+
+.font-size-14 {
+  font-size: 14px !important;
+}
+
+.font-size-18 {
+  font-size: 18px !important;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+}
+
+
+/* Document Popup */
+
+.statusTable th {
+  font-weight: 500;
+}
+
+.infomation_icon {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(96%) saturate(1833%) hue-rotate(349deg) brightness(96%) contrast(99%);
+}
+
+.pageheaderNew.pageheaderOMS .headerPatch li {
+  width: 20%;
+}
+
+/* OMS Dashoard Header */
+
+.omsDashNewHeader {
+  height: 124px !important;
+}
+
+
+.form-switchTxt{
+  font-size: 12px;
+  display: inline-block;
+  padding-right: 5px;
+  color: #212529;
+  font-weight: normal;
+}
+
+/*.pupFooter .container {
+    height: 100%;
+    overflow: auto;
+}*/
+
+.pageheaderNew .container {
+  height: 100%;
+  overflow: auto;
+}
+
+.searchIcon,
+.searchClose,
+.filteLink,
+.closeBtn {
+  cursor: pointer;
+}
+
+.ngx-pagination .current {
+  background: #4a2469 !important;
+}
+
+.downloadTable td {
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.dashRefresfBtn .btnSubmit1 {
+  padding: 8px 20px;
+  height: auto;
+  font-size: 14px;
+  background-color: green;
+  color: #fff;
+  border-radius: 4px;
+}
+
+
+
+/* notification css */
+.notification-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 4px 8px;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 280px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 100;
+}
+
+.notification-dropdown .clickable-order {
+  margin-left: 4px;
+}
+
+.notification-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pageheaderNew .container {
+  overflow: visible !important;
+}
+
+.notification-dropdown li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  color: #131313;
+
+  display: flex;
+  align-items: start;
+}
+
+.notification-dropdown li .close-icon {
+  width: 18px;
+}
+
+.notification-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.notification-dropdown p {
+  text-align: center;
+  padding: 10px;
+  color: #888;
+}
+/* .unread-message {
+  background-color: #f0f8ff;
+  font-weight: bold;
+} */
+
+/* Style for read messages */
+.read-message {
+  background-color: #f5f5f5; /* Light gray */
+  color: #777;
+}
+
+
+.notification-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 270px; /* Approx height for 5 items (adjust if needed) */
+  overflow-y: auto;
+}
+
+
+.submitBtnDealId .commonBtn button {
+  padding: 0 18px;
+  height: 40px;
+}
+.dashFromToInput .commonBtn button {
+  height: 40px;
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.highlight-yellow {
+  background-color:#FFFFC5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+
+/* pagination  */
+.pagination .page-item .page-link {
+  border: 0;
+  border-radius: 6px;
+  padding: 5px;
+  min-width: 30px;
+  text-align: center;
+  color: #131313; /* link color */
+  background: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* spacing */
+.pagination .page-item.me-2 {
+  margin-right: 8px;
+}
+
+/* active page (purple like your screenshot) */
+.pagination .page-item.active .page-link {
+  background: #4b006d; /* purple */
+  color: #fff;
+  /* border-color: #4b2f85; */
+  box-shadow: none;
+}
+
+/* disabled (ellipsis or prev/next disabled) */
+.pagination .page-item.disabled .page-link,
+.pagination .page-item .page-link[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+  background: #f8f9fa;
+  color: #8a8a8a;
+}
+
+

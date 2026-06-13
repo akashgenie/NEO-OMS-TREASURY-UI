@@ -1,0 +1,106 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$neo-primary: mat.define-palette(mat.$indigo-palette);
+$neo-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$neo-warn: mat.define-palette(mat.$red-palette);
+
+$neo-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $neo-primary,
+      accent: $neo-accent,
+      warn: $neo-warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($neo-theme);
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--unselected:enabled
+  .mdc-switch__icon,
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--selected:enabled
+  .mdc-switch__icon,
+.mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__shadow {
+  display: none !important;
+}
+.mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
+  border-radius: 20px !important;
+}
+.mat-mdc-slide-toggle .mdc-switch .mdc-switch__handle {
+  width: 19px !important;
+  height: 18px !important;
+  border: solid 1px #ded9e1 !important;
+}
+.mat-mdc-slide-toggle .mdc-switch.mdc-switch--selected .mdc-switch__handle {
+  border: solid 1px #4b006d !important;
+}
+
+.mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
+  height: 20px !important;
+}
+
+.mat-mdc-slide-toggle .mdc-switch .mdc-switch__ripple {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.mat-mdc-slide-toggle .mdc-switch {
+  width: 40px !important;
+}
+.mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__track::before,
+.mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__track::after {
+  background: #fff !important;
+  border: solid 1px #ded9e1;
+}
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--selected:enabled
+  .mdc-switch__handle::after,
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--unselected:enabled
+  .mdc-switch__handle::after {
+  background: #fff !important;
+}
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--selected:enabled
+  .mdc-switch__handle::after {
+  background: #4b006d !important;
+}
+
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__outer-circle,
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled
+  + .mdc-radio__background
+  .mdc-radio__inner-circle {
+  border-color: #4b006d !important;
+}
+
+.modal-fullscreen .modal-body {
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

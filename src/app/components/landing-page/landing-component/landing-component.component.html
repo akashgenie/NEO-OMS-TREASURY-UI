@@ -1,0 +1,130 @@
+<body>
+  <header class="langinHeader">
+    <!-- <a  class="menuLink"></a>  currently hiding this menu, later we used -->
+    <div class="container">
+      <a class="logo">
+        <!-- <img src="images/neo-logosm.png"> -->
+        <img src="../../../../assets/images/neo-logosm.png" />
+      </a>
+
+      <div class="headerRight">
+        <!-- <a class="btn_addnew">Add New</a> -->
+        <div class="diver"></div>
+
+        <div class="proBox">
+          <div class="proBoxLeft">
+            <span>Welcome</span>
+            <strong [title]="toolTip" class="showpointer">{{
+              userName
+            }}</strong>
+            <!-- <strong>Pravin Jain</strong> -->
+          </div>
+          <div class="proBoxRight">
+            <!-- <img src="images/proImg.png"> -->
+            <img src="assets/images/profile.png" />
+          </div>
+        </div>
+        <div class="proBoxRight">
+          <a
+            class="showpointer"
+            style="color: white; cursor: pointer"
+            (click)="userLogout()"
+            >Log Out</a
+          >
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="pageheader landingNew">
+    <div class="headerPatch2">
+      <div class="container">
+        <ul class="row">
+          <li class="col-lg-8 col-md-8 col-sm-12">
+            <ul class="row langinCont">
+              <li class="col-lg-4 col-md-6 col-sm-6">
+                <div class="landingBox">
+                  <div class="landingImg">
+                    <img
+                      src="../.././../../assets/images/landingImg1.svg"
+                      style="cursor: pointer"
+                      (click)="navigateDashborad()"
+                    />
+                  </div>
+                  <div
+                    (click)="navigateDashborad()"
+                    class="landingtxt"
+                    style="cursor: pointer"
+                  >
+                    Dashboard
+                  </div>
+                </div>
+              </li>
+
+              <li class="col-lg-4 col-md-6 col-sm-6">
+                <div class="landingBox">
+                  <div class="landingImg">
+                    <img
+                      src="../../../../assets/images/landingImg5.svg"
+                      (click)="navigateOmsSearchClient()"
+                      style="cursor: pointer"
+                    />
+                  </div>
+                  <div
+                    class="landingtxt"
+                    (click)="navigateOmsSearchClient()"
+                    style="cursor: pointer"
+                  >
+                    Create New Order
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li class="col-lg-4 col-md-4 col-sm-12">
+            <div class="quickLinksMain">
+              <h4>Quick Links</h4>
+
+              <div class="quickLinks">
+                <div class="sidebar-item" (click)="toggleOTCMenu()">
+                  <span class="text-decoration-underline font-size-14"
+                    >OTC</span
+                  >
+                  <span [class.rotated]="isOTCMenuOpen" class="arrow ms-4">
+                    <img src="/assets/images/ic_arrow.svg" alt="" />
+                  </span>
+                </div>
+
+                <!-- OTC Submenu -->
+                <div class="submenu" *ngIf="isOTCMenuOpen">
+                  <a routerLink="/oms/brocker_details">Add Counterparty</a>
+                  <a routerLink="/oms/view_counter_party">View Counter Party</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4"></div>
+
+  <div class="dashboardMainBox">
+    <!--  -->
+
+    <footer>
+      <div class="container">
+        © 2024 Neo Wealth Management Private Limited. All rights reserved.
+        Content on this site is protected under Indian copyrights law.
+      </div>
+    </footer>
+
+    <!-- <script src="js/jquery-3.6.3.min.js"></script>
+ 	 <script src="js/commin.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <!-- </body> -->
+    <!-- </html> -->
+  </div>
+</body>

@@ -1,0 +1,8 @@
+<h4 mat-dialog-title>
+  The client is not KRA {{ clienTypeId == 1 ? "Validated" : "Verified" }}, do
+  you want to proceed with physical journey?
+</h4>
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close(true)">Yes</button>
+  <button mat-button (click)="dialogRef.close(false)">No</button>
+</mat-dialog-actions>

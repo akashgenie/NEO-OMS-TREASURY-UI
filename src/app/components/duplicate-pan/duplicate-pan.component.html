@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>PAN Already Exists</h2>
+<mat-dialog-content>{{ message }}</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close(true)" *ngIf="showOk">Yes</button>
+  <button mat-button (click)="dialogRef.close(false)" *ngIf="showOk">No</button>
+  <button mat-button (click)="dialogRef.close(false)" *ngIf="!showOk">
+    Ok
+  </button>
+</mat-dialog-actions>

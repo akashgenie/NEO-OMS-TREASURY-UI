@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.fixed-income, .details, .cart {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    width: 45%;
+}
+.cart {
+    width: 90%;
+}
+.fixed-income table, .cart table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+.fixed-income table th, .fixed-income table td, .cart table th, .cart table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+.fixed-income button, .cart button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.cart button.submit {
+    background-color: #6f42c1;
+}
+.details div {
+    margin-bottom: 10px;
+}
+.details div span {
+    display: block;
+}
+.edit-btn {
+    color: blue;
+    cursor: pointer;
+}

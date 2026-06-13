@@ -1,0 +1,897 @@
+<app-common-header></app-common-header>
+<div class="pageheader">
+  <div class="pageheaderDashHead">
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1>Add Counterparty</h1>
+    </div>
+  </div>
+</div>
+<div class="personalhead mt-4">
+  <div id="inProgress">
+    <div class="container">
+      <form [formGroup]="brokerForm">
+        <ul class="row formList">
+          <li class="col-lg-4 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span> Counter Party Code<span class="mandatory1">*</span></span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="brokerCode"
+                readOnly
+              />
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('brokerCode')?.hasError('required') &&
+                (brokerForm.get('brokerCode')?.touched || panDetailsSubmitted)
+              "
+            >
+              Please enter brocker code
+            </span>
+          </li>
+          <li class="col-lg-8 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>Counter Party Name<span class="mandatory1">*</span></span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="brokerName"
+                [readOnly]="makeFieldsDisable"
+              />
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('brokerName')?.hasError('required') &&
+                (brokerForm.get('brokerName')?.touched || panDetailsSubmitted)
+              "
+            >
+              Please enter counter party name
+            </span>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('brokerName')?.errors?.['whitespace'] &&
+                (brokerForm.get('brokerName')?.touched || panDetailsSubmitted)
+              "
+            >
+              White spaces are not allowed
+            </span>
+          </li>
+          <li class="col-lg-2 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>PAN<span class="mandatory1">*</span></span>
+              <input
+                type="text"
+                class="form-control uppercase-input"
+                formControlName="panNo"
+                [readOnly]="makeFieldsDisable"
+                maxlength="10"
+                (input)="checkPan($event)"
+              />
+              <span
+                *ngIf="showVerificationIcon"
+                style="margin-left: 90%; margin-top: 20px"
+                ><img src="../../../../assets/images/checkGreen.svg"
+              /></span>
+              <span
+                *ngIf="showVerificationIconRed"
+                style="margin-left: 90%; margin-top: 20px"
+                ><img src="../../../../assets/images/checkRed.svg"
+              /></span>
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('panNo')?.hasError('required') &&
+                (brokerForm.get('panNo')?.touched || panDetailsSubmitted)
+              "
+            >
+              Please enter PAN
+            </span>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('panNo')?.hasError('pattern') ||
+                brokerForm.get('panNo')?.hasError('invalidPan')
+              "
+            >
+              Please enter valid PAN
+            </span>
+          </li>
+          <li class="col-lg-2 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>DOB / DOI<span class="mandatory1">*</span></span>
+              <mat-form-field>
+                <input
+                  #Dob
+                  matInput
+                  [matDatepicker]="picker"
+                  [matDatepickerFilter]="filterDates"
+                  formControlName="dob"
+                  class="form-control"
+                  placeholder="DD-MM-YYYY"
+                  [readOnly]="makeFieldsDisable"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                  [disabled]="makeFieldsDisable"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+              </mat-form-field>
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('dob')?.hasError('required') &&
+                (brokerForm.get('dob')?.touched || panDetailsSubmitted)
+              "
+            >
+              Please enter DOB
+            </span>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('dob')?.hasError('date') ||
+                brokerForm.get('dob')?.hasError('futureDate')
+              "
+            >
+              Enter Valid Date of birth
+            </span>
+          </li>
+          <li class="col-lg-3 col-md-6 col-sm-12">
+            <div class="commonBtn">
+              <a
+                (click)="checkPanVerify()"
+                class="showPointer green-button px-4"
+                >Verify PAN</a
+              >
+            </div>
+            <div class="commonBtn">
+              <a
+                (click)="checkAMLVerify()"
+                class="showPointer green-button px-4"
+                >Verify AML</a
+              >
+            </div>
+          </li>
+          <li class="col-lg-2 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>AML status </span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amlStatus"
+                readonly
+              />
+            </label>
+          </li>
+          <li class="col-lg-3 col-md-6 col-sm-12">
+            <div
+              class="upload-btn-wrapper cursor-pointer ms-0"
+              *ngIf="amlRequired"
+              style="width: 150px"
+            >
+              <button class="browseBtn px-0">Browse Files</button>
+              <input
+                (change)="fileChangeEvent($event)"
+                type="file"
+                name="fileUpload"
+                accept="image/jpeg, image/png,image/jpg"
+                class="form-control"
+              />
+            </div>
+            <div class="mt-1" *ngIf="amlFileName">
+              <div class="line">{{ amlFileName }}</div>
+            </div>
+            <ng-container *ngIf="amlResponse">
+              <p
+                class="errorTxt mt-1"
+                *ngIf="amlResponse.isAmlProceed === false"
+              >
+                Please upload compliance approval file
+              </p>
+            </ng-container>
+          </li>
+          <li class="col-lg-3 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>GST No </span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="gstNo"
+                (input)="checkGst($event)"
+              />
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('gstNo')?.hasError('pattern') ||
+                brokerForm.get('gstNo')?.hasError('invalidGst')
+              "
+            >
+              Invalid GST format
+            </span>
+          </li>
+          <li class="col-lg-3 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>TAN No </span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tanNo"
+                (input)="checkTan($event)"
+              />
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('tanNo')?.hasError('pattern') ||
+                brokerForm.get('tanNo')?.hasError('invalidTan')
+              "
+            >
+              Invalid TAN format
+            </span>
+          </li>
+          <li class="col-lg-5 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>Address 1<span class="mandatory1">*</span></span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="address"
+              />
+            </label>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('address')?.hasError('required') &&
+                (brokerForm.get('address')?.touched || panDetailsSubmitted)
+              "
+            >
+              Please enter Address 1
+            </span>
+            <span
+              class="errorTxt"
+              *ngIf="
+                brokerForm.get('address')?.errors?.['whitespace'] &&
+                (brokerForm.get('address')?.touched || panDetailsSubmitted)
+              "
+            >
+              White spaces are not allowed
+            </span>
+          </li>
+          <li class="col-lg-4 col-md-6 col-sm-12">
+            <label class="form-controlMain">
+              <span>Address 2</span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="address2"
+              />
+            </label>
+          </li>
+        </ul>
+        <div formArrayName="contactDetails">
+          <div class="headingLine">
+            <span>Contact Details</span>
+          </div>
+          <div
+            *ngFor="let contact of contactDetails.controls; let i = index"
+            [formGroupName]="i"
+            class="contact-group"
+          >
+            <div>
+              <div class="float-end">
+                <a
+                  class="ic_delete"
+                  *ngIf="contactDetails.length > 1"
+                  (click)="deleteContactDetails(i)"
+                ></a>
+              </div>
+            </div>
+            <ul class="row mb-4">
+              <li class="col-lg-4 col-md-4 col-sm-12">
+                <label class="form-controlMain">
+                  <span
+                    >Name<span class="mandatory1" *ngIf="i === 0">*</span></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    (keypress)="allowOnlyAlphabets($event)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    contact.get('name')?.hasError('required') &&
+                    (contact.get('name')?.touched || panDetailsSubmitted)
+                  "
+                >
+                  Please enter name
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-4 col-sm-12">
+                <label class="form-controlMain">
+                  <span
+                    >Email<span class="mandatory1" *ngIf="i === 0"
+                      >*</span
+                    ></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    contact.get('email')?.hasError('required') &&
+                    (contact.get('email')?.touched || panDetailsSubmitted)
+                  "
+                >
+                  Please enter email
+                </span>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    contact.get('email')?.hasError('email') &&
+                    (contact.get('email')?.touched || panDetailsSubmitted)
+                  "
+                >
+                  Please enter a valid email address
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-4 col-sm-12">
+                <label class="form-controlMain">
+                  <span
+                    >Mobile No<span class="mandatory1" *ngIf="i === 0"
+                      >*</span
+                    ></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="mobileNo"
+                    (keypress)="allowOnlyNumbers($event)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    contact.get('mobileNo')?.hasError('required') &&
+                    (contact.get('mobileNo')?.touched || panDetailsSubmitted)
+                  "
+                >
+                  Please enter mobile
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="commonBtn">
+            <button
+              type="button"
+              class="btnSubmit"
+              (click)="addContact()"
+              [disabled]="contactDetails.length >= 10"
+              *ngIf="contactDetails.length < 10"
+            >
+              Add More Contact
+            </button>
+          </div>
+        </div>
+        <div class="headingLine mt-5">
+          <span>Bank Details</span>
+        </div>
+        <div formArrayName="bankDetails">
+          <div
+            *ngFor="let bank of bankDetailsArray.controls; let i = index"
+            [formGroupName]="i"
+            class="mb-4"
+          >
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5>Bank Account</h5>
+              <a
+                class="ic_delete"
+                *ngIf="bankDetailsArray.length > 1"
+                (click)="deleteBankDetails(i)"
+              ></a>
+            </div>
+            <ul class="row formList">
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span>Bank A/c No.<span class="mandatory1">*</span></span>
+                  <input
+                    [type]="showHideFlag[i] ? 'password' : 'text'"
+                    type="text"
+                    class="form-control"
+                    formControlName="bankAccount"
+                    (input)="checkBankAccountMatch(i)"
+                    (keypress)="allowOnlyNumbers($event)"
+                    (copy)="disableCopyPaste($event)"
+                    (cut)="disableCopyPaste($event)"
+                    (paste)="disableCopyPaste($event)"
+                  />
+                  <div class="input-group-append">
+                    <a
+                      [class.ic_eye]="showHideFlag[i]"
+                      [class.i_eye]="!showHideFlag[i]"
+                      (click)="showHide(i)"
+                    >
+                    </a>
+                  </div>
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('bankAccount')?.hasError('required') &&
+                    (bank.get('bankAccount')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please enter bank A/c No
+                </span>
+                <span
+                  class="errorTxt"
+                  *ngIf="bank.get('bankAccount')?.hasError('bankDupAcc')"
+                >
+                  Bank account already exists
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span
+                    >Re-enter Bank A/c No.<span class="mandatory1"
+                      >*</span
+                    ></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="reBankAccount"
+                    (input)="checkBankAccountMatch(i)"
+                    (keypress)="allowOnlyNumbers($event)"
+                    (copy)="disableCopyPaste($event)"
+                    (cut)="disableCopyPaste($event)"
+                    (paste)="disableCopyPaste($event)"
+                  />
+                  <span
+                    *ngIf="showSuccessIcon[i]"
+                    style="margin-left: 90%; margin-top: 20px"
+                    ><img src="../../../../assets/images/checkGreen.svg"
+                  /></span>
+                  <span
+                    *ngIf="showFailIcon[i]"
+                    style="margin-left: 90%; margin-top: 20px"
+                    ><img src="../../../../assets/images/checkRed.svg"
+                  /></span>
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('reBankAccount')?.hasError('required') &&
+                    (bank.get('reBankAccount')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please re-enter bank A/c No
+                </span>
+                <div
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('reBankAccount')?.errors?.['accountMismatch'] &&
+                    bank.get('reBankAccount')?.touched
+                  "
+                >
+                  Bank A/c no. and Re-enter Bank A/c no. must match
+                </div>
+              </li>
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <mat-form-field
+                  class="example-full-width form-select"
+                  appearance="fill"
+                >
+                  <mat-label>IFSC Code</mat-label>
+                  <input
+                    type="text"
+                    aria-label="Number"
+                    matInput
+                    formControlName="ifscCode"
+                    (input)="checkIFSC($event, i)"
+                    [matAutocomplete]="ifsc"
+                    (keypress)="restrictSpecialCharacters($event)"
+                  />
+                  <mat-autocomplete
+                    #ifsc="matAutocomplete"
+                    (optionSelected)="getBankInfo($event, i)"
+                  >
+                    <mat-option
+                      *ngFor="let option of ifscOptions[i] | async"
+                      [value]="option"
+                    >
+                      {{ option }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('ifscCode')?.hasError('required') &&
+                    (bank.get('ifscCode')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please enter IFSC code
+                </span>
+                <span
+                  class="errorTxt"
+                  *ngIf="bank.get('ifscCode')?.hasError('bankDupIFSC')"
+                >
+                  Bank IFSC already exists
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span>Branch Name<span class="mandatory1">*</span></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="branchName"
+                    (keypress)="allowOnlyAlphabets($event)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('branchName')?.hasError('required') &&
+                    (bank.get('branchName')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please enter branch name
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span>MICR<span class="mandatory1">*</span></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="micr"
+                    (keypress)="allowOnlyNumbers($event)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('micr')?.hasError('required') &&
+                    (bank.get('micr')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please enter MICR
+                </span>
+              </li>
+              <li class="col-lg-4 col-md-6 col-sm-12">
+                <mat-form-field class="form-control form-select">
+                  <mat-label>Bank Account Type</mat-label>
+                  <mat-select formControlName="accountType">
+                    <mat-option
+                      *ngFor="let accountTypeId of bankAccountTypeOptions"
+                      [value]="accountTypeId.enumName"
+                    >
+                      {{
+                        accountTypeId.enumName.toString().toUpperCase()
+                      }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    bank.get('accountType')?.hasError('required') &&
+                    (bank.get('accountType')?.touched || bankDetailsSubmitted)
+                  "
+                >
+                  Please select bank account type
+                </span>
+              </li>
+              <li
+                class="col-lg-2 col-md-6 col-sm-12"
+                style="width: 176px"
+                *ngIf="!showSuccessIcon[i]"
+              >
+                <div class="commonBtn">
+                  <a
+                    (click)="checkBankDetails(i)"
+                    class="showPointer green-button"
+                    >Verify Bank</a
+                  >
+                </div>
+              </li>
+              <li class="col-lg-2 col-md-6 col-sm-12" style="width: 270px">
+                <div class="upload-btn-wrapper cursor-pointer">
+                  <button class="browseBtn px-0" type="button">
+                    Upload Cheque to Prefill
+                  </button>
+                  <input
+                    type="file"
+                    name="fileUpload"
+                    class="form-control"
+                    (change)="onFileSelected($event, i)"
+                    accept=".pdf, .jpg, .png,"
+                  />
+                  <span *ngIf="fileNames[i]" class="font-size-12 mt-1">{{
+                    fileNames[i]
+                  }}</span>
+                </div>
+                <span class="errorTxt" *ngIf="pennyDropFailure[i]">
+                  Penny Drop Verification Failed. Please upload a cancelled
+                  Cheque Copy or Bank proof for Verifying the Bank Details
+                </span>
+              </li>
+              <li class="col-lg-2 col-md-6 col-sm-12">
+                <div class="upload-btn-wrapper cursor-pointer">
+                  <button class="browseBtn px-0" type="button">
+                    Upload Bank Proof
+                  </button>
+                  <input
+                    type="file"
+                    name="fileUpload"
+                    class="form-control"
+                    (change)="onFileSelectedBankProof($event, i)"
+                    accept=".pdf, .jpg, .png,"
+                  />
+                  <span
+                    *ngIf="bankFileProofNames[i]"
+                    class="font-size-12 mt-1"
+                    >{{ bankFileProofNames[i] }}</span
+                  >
+                </div>
+              </li>
+              <li
+                class="col-lg-2 col-md-6 col-sm-12"
+                *ngIf="i == bankDetailsArray.length - 1"
+              >
+                <div class="commonBtn">
+                  <button
+                    type="button"
+                    class="btnSubmit"
+                    (click)="addBankDetails()"
+                    [disabled]="bankDetailsArray.length >= 5"
+                    *ngIf="bankDetailsArray.length < 5"
+                  >
+                    Add More Bank
+                  </button>
+                </div>
+              </li>
+              <li
+                class="col-lg-2 col-md-2 col-sm-12"
+                *ngIf="shouldShowPrimaryCheckbox(i)"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="primaryAccount"
+                    id="primaryAccount_{{ i }}"
+                    (change)="onPrimaryAccountChange(i, $event)"
+                  />
+                  <label
+                    class="form-check-label radioLabel"
+                    for="flexCheckDefault"
+                  >
+                    Primary Account
+                  </label>
+                </div>
+              </li>
+            </ul>
+            <hr *ngIf="i < bankDetailsArray.length - 1" />
+          </div>
+        </div>
+        <div class="headingLine">
+          <span>Demat Details</span>
+        </div>
+        <div formArrayName="dematDetails">
+          <div
+            *ngFor="let demat of dematDetailsArray.controls; let i = index"
+            [formGroupName]="i"
+            class="mb-4"
+          >
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5>Demat Account</h5>
+              <a
+                class="ic_delete"
+                *ngIf="dematDetailsArray.length > 1"
+                (click)="deletedeamatDetails(i)"
+              ></a>
+            </div>
+            <ul class="row formList">
+              <li class="col-lg-3 col-md-6 col-sm-12">
+                <mat-form-field appearance="fill" class="form-select">
+                  <mat-label>Depository</mat-label>
+                  <mat-select formControlName="depository">
+                    <mat-option value="CDSL">CDSL</mat-option>
+                    <mat-option value="NSDL">NSDL</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div
+                  class="errorTxt"
+                  *ngIf="
+                    demat.get('depository')?.hasError('required') &&
+                    (demat.get('depository')?.touched || demateDetailsSubmitted)
+                  "
+                >
+                  Please select depository
+                </div>
+              </li>
+              <li class="col-lg-3 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span>Demat A/c No. </span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="dematAccount"
+                    (input)="checkDematNoMatch(i)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="demat.get('dematAccount')?.hasError('invalidFormat')"
+                >
+                  Demat A/c no. should be 16 digits
+                </span>
+              </li>
+              <li class="col-lg-3 col-md-6 col-sm-12">
+                <label class="form-controlMain">
+                  <span>Re-enter Demat A/c No. </span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="reDematAccount"
+                    (input)="checkDematNoMatch(i)"
+                  />
+                </label>
+                <span
+                  class="errorTxt"
+                  *ngIf="
+                    demat.get('reDematAccount')?.errors?.[
+                      'DemateaccountMismatch'
+                    ] && demat.get('reDematAccount')?.touched
+                  "
+                >
+                  Demat A/c No. and Re-enter Demat A/c No. must match
+                </span>
+              </li>
+              <li class="col-lg-2 col-md-6 col-sm-12" style="width: 190px">
+                <div class="commonBtn"></div>
+              </li>
+              <li class="col-lg-2 col-md-6 col-sm-12">
+                <div class="upload-btn-wrapper cursor-pointer">
+                  <button class="browseBtn px-0" type="button">
+                    Upload Demat Proof
+                  </button>
+                  <input
+                    type="file"
+                    name="fileUpload"
+                    class="form-control"
+                    (change)="onFileSelectedDemat($event, i)"
+                    accept=".pdf, .jpg, .png,"
+                  />
+                  <span *ngIf="dematFileNames[i]" class="font-size-12 mt-1">{{
+                    dematFileNames[i]
+                  }}</span>
+                </div>
+              </li>
+              <li
+                class="col-lg-3 col-md-6 col-sm-12"
+                *ngIf="i == dematDetailsArray.length - 1"
+              >
+                <div class="commonBtn">
+                  <button
+                    type="button"
+                    class="btnSubmit"
+                    (click)="addDematDetails()"
+                    [disabled]="dematDetailsArray.length >= 5"
+                    *ngIf="dematDetailsArray.length < 5"
+                  >
+                    Add More Demat
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <hr *ngIf="i < dematDetailsArray.length - 1" />
+          </div>
+        </div>
+        <div class="headingLine">Upload</div>
+        <ul class="row formList">
+          <li class="col-lg-2 col-md-6 col-sm-12 pb-20">
+            <label class="fw-500 font-size-14"
+              >PAN Document<span class="mandatory1">*</span></label
+            >
+          </li>
+          <li class="col-lg-6 col-md-6 col-sm-12 pb-20">
+            <div class="upload-btn-wrapper cursor-pointer">
+              <button class="browseBtn px-3 w-200" type="button">
+                Browse File
+              </button>
+              <input
+                type="file"
+                name="fileUpload"
+                class="form-control"
+                (change)="onFileChange($event, 'pan')"
+                accept=".pdf, .jpg, .png,"
+              />
+            </div>
+            <span class="errorTxt" *ngIf="panDocumentRequired">
+              PAN Document is required
+            </span>
+            <div class="mt-1" *ngIf="panFileName">
+              <div class="line">{{ panFileName }}</div>
+            </div>
+          </li>
+        </ul>
+        <ul class="row formList">
+          <li class="col-lg-2 col-md-6 col-sm-12 pb-20">
+            <label class="fw-500 font-size-14">GST Document</label>
+          </li>
+          <li class="col-lg-6 col-md-6 col-sm-12 pb-20">
+            <div class="upload-btn-wrapper cursor-pointer">
+              <button class="browseBtn px-3 w-200" type="button">
+                Browse File
+              </button>
+              <input
+                type="file"
+                name="fileUpload"
+                class="form-control"
+                (change)="onFileChange($event, 'gst')"
+                accept=".pdf, .jpg, .png,"
+              />
+            </div>
+            <div class="mt-1" *ngIf="gstFileName">
+              <div class="line">{{ gstFileName }}</div>
+            </div>
+          </li>
+        </ul>
+        <ul class="row formList">
+          <li class="col-lg-2 col-md-6 col-sm-12 pb-20">
+            <label class="fw-500 font-size-14">Others</label>
+          </li>
+          <li class="col-lg-6 col-md-6 col-sm-12 pb-20">
+            <div class="upload-btn-wrapper cursor-pointer">
+              <button class="browseBtn px-3 w-200" type="button">
+                Browse File
+              </button>
+              <input
+                type="file"
+                name="fileUpload"
+                class="form-control"
+                (change)="onFileChange($event, 'others')"
+                accept=".pdf, .jpg, .png,"
+              />
+            </div>
+            <div class="mt-1" *ngIf="otherFileNames">
+              <div class="line">{{ otherFileNames }}</div>
+            </div>
+          </li>
+        </ul>
+        <div class="commonBtn">
+          <a class="showPointer" (click)="onSubmit()">Save</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="confirmation-dialog" *ngIf="Showmessage">
+  <div class="confirmation-dialog-content">
+    <div>
+      <h4>{{ message }}</h4>
+      <br />
+    </div>
+    <button class="btn btnOutline w-auto" (click)="closeDialog()">Ok</button>
+  </div>
+</div>
+<app-common-footer></app-common-footer>

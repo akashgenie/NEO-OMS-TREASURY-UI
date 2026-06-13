@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="fixed-income">
+    <h2>FIXED INCOME</h2>
+    <table>
+      <tr>
+        <th>ISIN</th>
+        <th>Scrip/Scheme Name</th>
+      </tr>
+      <tr>
+        <td>
+          <select>
+            <option value="ISIN1">ISIN1</option>
+            <option value="ISIN2">ISIN2</option>
+          </select>
+        </td>
+        <td>
+          <input type="text" name="scheme-name" />
+        </td>
+      </tr>
+    </table>
+    <div>Available Qty: <input type="number" name="available-qty" /></div>
+    <div>
+      <button>BUY</button>
+      <button>SELL</button>
+    </div>
+    <div>Qty: <input type="number" name="qty" /></div>
+    <div>Price: <input type="number" name="price" step="0.01" /></div>
+    <div>Amount: <input type="number" name="amount" step="0.01" /></div>
+    <div>
+      <button>Add to Cart</button>
+      <button>DONE</button>
+    </div>
+  </div>
+  <div class="details">
+    <h2>PAN & Client Details:</h2>
+    <div>
+      <span>PAN:</span>
+      <span>Client Id:</span>
+      <span>Mobile:</span>
+      <span>Email:</span>
+      <span>DOB:</span>
+      <span>A/c Type:</span>
+      <span>A/c Status: Active/Inactive/Dormant</span>
+    </div>
+    <h2>Bank Details</h2>
+    <div>
+      <span>Bank A/c No.: <span class="edit-btn">Edit button</span></span>
+      <span>IFSC Code: <span class="edit-btn">Edit button</span></span>
+    </div>
+    <h2>Demat Details</h2>
+    <div>
+      <span>BOID</span>
+      <span>Client Id: <span class="edit-btn">Edit button</span></span>
+    </div>
+  </div>
+</div>
+<div class="cart">
+  <h2>VIEW CART</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ISIN</th>
+        <th>Security</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>IN0020210095</td>
+        <td>6.10% Government of India Securities 12.JUL.2031</td>
+        <td>300</td>
+        <td>1000.00</td>
+        <td>300,000.00</td>
+        <td><span class="edit-btn">🗑️</span></td>
+      </tr>
+      <tr>
+        <td>INE248U07ER8</td>
+        <td>360 ONE PRIME LIMITED SR VIII TR I 9.66 NCD 18JN29 FVRS1000</td>
+        <td>100</td>
+        <td>2000.00</td>
+        <td>200,000.00</td>
+        <td><span class="edit-btn">🗑️</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="submit">SUBMIT</button>
+</div>

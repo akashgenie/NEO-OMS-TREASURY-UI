@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="40" viewBox="0 0 110 40">
+  <g id="Group_9810" data-name="Group 9810" transform="translate(-628.5 -271)">
+    <path id="Path_25619" data-name="Path 25619" d="M0,20H1V130H0Z" transform="translate(758.5 290.5) rotate(90)" fill="#e1d6c1"/>
+    <g id="Path_25590" data-name="Path 25590" transform="translate(663 271)">
+      <path id="Path_138" data-name="Path 138" d="M20,39.5A19.505,19.505,0,0,1,12.41,2.032,19.505,19.505,0,0,1,27.59,37.968,19.378,19.378,0,0,1,20,39.5Z" fill="#fff"/>
+      <path id="Path_139" data-name="Path 139" d="M20,1a19.005,19.005,0,0,0-7.4,36.507A19.005,19.005,0,0,0,27.4,2.493,18.88,18.88,0,0,0,20,1m0-1A20,20,0,1,1,0,20,20,20,0,0,1,20,0Z" fill="#e1d6c1"/>
+    </g>
+    <text id="OR" transform="translate(674 296)" fill="#1c1c1c" font-size="12" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">OR</tspan></text>
+  </g>
+</svg>

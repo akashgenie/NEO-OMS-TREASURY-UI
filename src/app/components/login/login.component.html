@@ -1,0 +1,153 @@
+<div class="loginBoxMain">
+  <div class="loginBox">
+    <div class="loginLogo">
+      <img src="assets/images/neo-logo.png" />
+    </div>
+
+    <div class="loginStep1" *ngIf="showLogin">
+      <div class="headingLine">Login</div>
+      <form [formGroup]="logInForm" autocomplete="on">
+        <div class="pb50">
+          <label
+            class="form-controlMain"
+            [class.error]="logInForm.get('email')?.invalid"
+          >
+            <input
+              type="text"
+              #loginText
+              class="form-control"
+              formControlName="email"
+              name="email"
+              autocomplete="on"
+              (input)="checkEmail($event)"
+            />
+            <span class="floating-label"
+              >Please enter your Email to login.</span
+            >
+          </label>
+          <div class="loginError mt-2" *ngIf="isInvalidUser">Invalid User</div>
+          <div
+            class="loginError mt-2"
+            *ngIf="azureTokenError && !isLoginAttemptExpired && !isInvalidUser"
+          >
+            Invalid or expired token. Please try again.
+          </div>
+
+          <span
+            class="loginError"
+            *ngIf="
+              logInForm.get('email')?.hasError('email') &&
+              !logInForm.get('email')?.hasError('required')
+            "
+            >Enter correct Email id</span
+          >
+          <span
+            class="loginError"
+            *ngIf="
+              (logInForm.get('email')?.hasError('required') &&
+                loginFormSubmitted) ||
+              loginValidation
+            "
+            >Please enter a valid Email ID
+          </span>
+          <span
+            class="loginError"
+            *ngIf="
+              userCheckError &&
+              !logInForm.get('email')?.hasError('required') &&
+              !loginValidation
+            "
+          >
+            Please enter a valid Email ID
+          </span>
+        </div>
+
+        <button type="submit" class="btnSubmit" (click)="verifyEmail()">
+          Submit
+        </button>
+      </form>
+    </div>
+    <div class="loginStep2" *ngIf="showOTP && isOtpLogin">
+      <form [formGroup]="otpForm">
+        <div class="headingLine">OTP Verification</div>
+
+        <div class="otpBox">
+          An OTP has been sent to your Email ID <strong>{{ userMail }}</strong>
+          <!-- & Mobile No.
+                    <strong>93******47.</strong> -->
+        </div>
+
+        <div class="pb50">
+          <label
+            class="form-controlMain"
+            [class.error]="otpForm.get('otp')?.invalid"
+          >
+            <input
+              type="text"
+              #otpText
+              class="form-control"
+              name="otp"
+              formControlName="otp"
+              (input)="checkOTP($event)"
+            />
+            <span class="floating-label">OTP</span>
+          </label>
+          <div
+            class="loginError mt-2"
+            *ngIf="userInfo && userInfo.loginAttemptExpired"
+          >
+            You've reached the maximum number of login attempts in one hour .
+            Please try again after 1 hour
+          </div>
+          <div
+            class="errorTxt mt-2"
+            *ngIf="
+              userInfo && !userInfo.otpVerified && !userInfo.loginAttemptExpired
+            "
+          >
+            Invalid OTP
+          </div>
+          <div class="optTxt" *ngIf="!showOTPBtn && !showOTPBtnInitially">
+            Didn't receive OTP?
+            <a style="cursor: pointer" (click)="setOTPVisible()">Click here</a>
+            to Resend.
+          </div>
+          <div class="optTxtGreen" *ngIf="showOTPBtn">
+            <img src="assets/images/checkGreen.svg" /> Resent the OTP
+            successfully
+            <span>{{ time }}</span>
+          </div>
+          <div class="optTxtGreen" *ngIf="showOTPBtnInitially">
+            <img src="assets/images/checkGreen.svg" />Sent the OTP successfully
+            <span>{{ initialTime }}</span>
+          </div>
+          <span
+            class="errorTxt"
+            *ngIf="
+              (otpForm.get('otp')?.hasError('required') && otpFormSubmitted) ||
+              otpValidation
+            "
+            >OTP is required
+          </span>
+        </div>
+        <button type="submit" class="btnSubmit" (click)="verifyLogin()">
+          Verify & Login
+        </button>
+      </form>
+    </div>
+
+    <!-- <div class="loginStep3" *ngIf="showSuccess">
+            <div class="ic_greenBig">
+                <img src="assets/images/checkGreen.svg">
+            </div>
+            <div class="headingLine">{{userName}}</div>
+            <p>Welcome to Neo Client management System</p>
+            <div class="loginLoadBox">
+                <span class="loginLoading"></span> Loading...
+            </div>
+        </div> -->
+  </div>
+  <div class="copyTxt">
+    © 2024 Neo Wealth Management Private Limited. All rights reserved
+  </div>
+</div>

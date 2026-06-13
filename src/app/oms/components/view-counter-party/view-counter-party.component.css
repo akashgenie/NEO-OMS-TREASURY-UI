@@ -1,0 +1,388 @@
+/* .dashboard {
+    padding: 20px;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-add-new,
+  .btn-settings,
+  .btn-search {
+    background-color: #ef476f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-settings,
+  .btn-search {
+    background-color: transparent;
+    color: #ef476f;
+    font-size: 18px;
+    padding: 5px;
+  }
+
+  .btn-settings i,
+  .btn-search i {
+    font-size: 18px;
+  }
+
+  .dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  .dashboard-table th {
+    background-color: #f1f1f1;
+  }
+
+  .dashboard-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+   */
+
+/* Bond Team Dashboard */
+
+/*Table Header*/
+.dashBoardInventoryTableHeader .divTableCell:first-child {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(2) {
+    width: 120px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(3) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(4) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(5) {
+    width: 130px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(6) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(7) {
+    width: 150px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(8) {
+    width: 150px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(9) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(10) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(11) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:nth-child(12) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell:last-child {
+    width: 70px !important;
+}
+
+.dashBoardBondTeamTable .divTableRow .form-check {
+    margin-right: 0;
+}
+
+
+/* Table Body */
+.dashBoardInventoryTable .divTableCell:first-child {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(2) {
+    width: 120px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(3) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(4) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(5) {
+    width: 130px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(6) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(7) {
+    width: 150px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(8) {
+    width: 150px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(9) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(10) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(11) {
+    width: 80px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:nth-child(12) {
+    width: 100px !important;
+}
+
+.dashBoardInventoryTable .divTableCell:last-child {
+    width: 70px !important;
+}
+
+
+.divTableCell.fixed-width {
+    width: 100px !important;
+}
+
+.dashBoardTable {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.divTableRow {
+    display: table-row;
+}
+
+.divTableCell {
+    display: table-cell;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+}
+
+
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+    padding: 23px 0 0 !important;
+}
+
+.mdc-text-field--filled {
+    height: 50px !important;
+}
+
+/* sorting */
+.arrow {
+    display: block;
+    width: 0;
+    height: 0;
+    /* margin-left: 5px; */
+    /*  vertical-align: middle;*/
+    border: 5px solid transparent;
+}
+
+.arrow-desc {
+    border-bottom-color: #8b8b8b;
+    margin-bottom: 1px;
+}
+
+.arrow-asc {
+    border-top-color: #8b8b8b;
+}
+
+.uppercase-input {
+    text-transform: uppercase;
+}
+
+.form-select,
+.form-control {
+    background-color: transparent !important;
+}
+
+
+/* Custom Center Popup */
+.customCenterPopup .closeBtn {
+    right: 18px;
+    top: 18px;
+}
+
+.confirmation-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0 0 0 / 5%);
+    z-index: 99;
+}
+
+.confirmation-dialog-content {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 3px 25.5px 4.5px #0000000f;
+    width: 400px;
+}
+
+.dialog-buttons {
+    margin-top: 20px;
+}
+
+.dialog-buttons .btnConfirm {
+    margin-right: 10px;
+}
+
+/* New Styling */
+/* .kraDetailsOMSpup .editBank .placeOrderContainer:hover h4,
+  .kraDetailsOMSpup .editBank .placeOrderContainer:hover .colGry,
+  .kraDetailsOMSpup .editBank .placeOrderContainer:hover h6 {
+      color: #fff;
+  } */
+
+
+.notification-dropdown {
+    left: 0 !important;
+}
+
+.dashBoardInventoryTableHeader .divTableCell label {
+    text-transform: uppercase;
+}
+
+/* View Cart Table */
+.viewCartModule .table,
+.viewCartModule th,
+.viewCartModule td {
+    border: 1px solid #dee2e6 !important;
+}
+
+.viewCartModule .table>:not(caption)>*>* {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.viewCartModule th {
+    font-size: 12px;
+    padding: 10px;
+}
+
+.viewCartModule thead {
+    background-color: #462264;
+    color: #fff;
+}
+
+.pupFooterFilterSM.pupFooterFilter {
+    height: calc(80vh - 115px) !important;
+}
+
+.pageheaderNew.pageheaderOMS .headerPatch li {
+    width: 33%;
+}
+
+.disabled-button {
+    background-color: #ccc !important;
+    color: #666;
+    cursor: not-allowed;
+    pointer-events: none;
+    border: 1px solid #aaa;
+}
+
+.viewCartModule .table,
+.viewCartModule th,
+.viewCartModule td {
+    border: 1px solid #dee2e6 !important;
+}
+
+.viewCartModule .table>:not(caption)>*>* {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.viewCartModule th {
+    font-size: 12px;
+    padding: 10px;
+}
+
+.viewCartModule thead {
+    background-color: #462264;
+    color: #fff;
+}
+
+.payment-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    background: rgb(0, 0, 0, 0.5);
+}
+
+.addModuleDropNew {
+    background: #fff;
+    padding: 1rem;
+    /* box-shadow: 0px -1px 6px #1F022D0A; */
+    box-shadow: 0px 0px 4px #1f022d05;
+    border: 1px solid #EFEFEF;
+    border-radius: 8px;
+    position: relative;
+    width: 800px;
+}
+
+.addModuleDrop {
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.statusTable .table,
+.statusTable th,
+.statusTable td {
+    border: 1px solid #dee2e6 !important;
+    font-size: 12px;
+}
+
+.statusTable th {
+    padding: .5rem .5rem;
+}
